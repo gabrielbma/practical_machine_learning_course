@@ -1,9 +1,0 @@
-library(caret)
-
-pmlTraining <- read.csv("pml-training.csv")
-head(pmlTraining$classe)
-
-rfModel <- train(classe~., data=pmlTraining, method="rf", preProcess="pca", prox=TRUE)
-
-
-#pmlTesting <- read.csv("pml-testing.csv")

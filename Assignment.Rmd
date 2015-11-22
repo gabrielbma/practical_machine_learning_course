@@ -1,0 +1,78 @@
+---
+title: "A statistical model to determine how well people are doing physical exercises"
+author: "Gabriel Bezerra de Menezes Armelin"
+output: html_document
+---
+
+```{r setup, echo=FALSE, cache=FALSE, results="hide", warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE, progress = TRUE, verbose = TRUE,warning=FALSE, message=FALSE)
+knitr::read_chunk('functions.R')
+source('functions.R')
+model <- loadModel("model-RandomForest- 21-11-2015-T21-21-41")
+#model <- buildModel()
+```
+
+# Summary
+
+This document illustrates a statistical model building to determine how well people are doing physical exercises. In order to do that, this document is made up of the following sections:
+
+* Preprocessing
+* Model training
+* Model analysis
+
+The following paragraphs explain each one of these sections.
+
+## Model Building
+
+This section explains how the statistical model has been built. The following code shows the entire functions used to build the final model.
+```{r, eval=F}
+  set.seed(96)
+  data <- preProcessData()
+  model <- trainModel(data$training)
+  testModel(model, data$testing)
+```
+
+The following sections explain each one of these three functions.
+
+### Preprocess
+
+This sections explains the preprocess is done in the dataset. The following code shows the *preProcessData* function:
+```{r preProcessDataFunction}
+```
+
+The next paragraphs explain each function briefly.
+
+The *acquireData* function loads the dataset. This study make use of the *Weight Lifting Exercise Dataset* that come from http://groupware.les.inf.puc-rio.br/har. This dataset contains several variables containing moviment data from sensors like accelerometers when 6 people were doing exercises. The "classe" variable will be used as outcome and "Class A" value means that one has done the exercise correctly while the other class values mean the otherwise.
+```{r acquireDataFunction, echo=TRUE}
+```
+
+The *cleanData* function removes variables that contain meaningless values such as *NA*, *#DIV/0* and others. It returns the dataset without these columns.
+```{r cleanDataFunction}
+```
+
+The *doCenteringScaling* function centers and scales the dataset. It returns the new centered and scaled dataset values.
+```{r doCenteringScalingFunction}
+```
+
+The *createPartitions* function separates the dataset in *training* and *testing* datasets. The training dataset contains 60% of the original dataset and the remaining 40% is used for testing. It returns a list containing these two datasets. 
+```{r createPartitionsFunction}
+```
+
+### Model training
+
+The *trainModel* function trains the model using the *training* dataset. It uses 10-fold cross-validation with 5 repetions and Random Forest with 500 trees (default) for each forest. I have chosen this algorithm because it is one of the most popular algorithms and I would like to know how better it would perform in this dataset.
+```{r trainModelFunction}
+```
+The following code prints information about the model built:
+```{r}
+print(model)
+```
+
+### Model analysis
+This section assesses the model built in the last section by using the testing dataset. The following code shows how well it performs in the *testing* dataset:
+```{r testModelFunction}
+```
+```{r, echo=FALSE}
+data <- preProcessData()
+testModel(model, data$testing)
+```
