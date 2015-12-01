@@ -19,7 +19,7 @@ cleanData <- function(data) {
     amplitudeIndex <- grep("amplitude.*", names(data))
     rawtimestampIndex <- grep("raw_timestamp.*", names(data))
 
-    removedColumns[c("X", "user_name", "new_window", "num_window",
+    removedColumns[c("X", "user_name", "num_window",
                      "cvtd_timestamp", "raw_timestamp_part_1",
                      "raw_timestamp_part_2",
                      kurtosisIndex,
